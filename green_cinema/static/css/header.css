@@ -14,7 +14,8 @@
 
 .header{
     display: flex;
-    flex-flow: row nowrap;
+    width: 100%;
+
     justify-content: space-between;
     align-items: flex-start;
     height: auto;
@@ -24,8 +25,21 @@
 .logo-wrapper{
     width: 134px;
     height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .logo{
     width: 100%;
+}
+
+.footer-wrapper{
+    min-width: 190px;
+    width: 100%;
+    margin-top: 80px;
+    padding-bottom: 20px;
+    font-size: 1em;
+    color: #757575;
+    position: relative;
 }
