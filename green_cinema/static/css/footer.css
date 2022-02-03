@@ -2,6 +2,8 @@
     background: rgba(0,0,0,.75);
     margin-top: 0;
     width: 100%;
+    color: #757575;
+    font-size: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -9,6 +11,7 @@
 
 .footer{
     width: 1000px;
+    height: 290px;
 }
 
 
