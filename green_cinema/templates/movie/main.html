@@ -1,3 +1,16 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block content %}
+
+    <div class="a1">
+    <img src="{% static '/img/background.jpeg' %}" alt="test">
+    </div>
+
+    <div class="card bg-transparent" style="width: 18rem;">
+        <img src="{% static '/img/1.png' %}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+        </div>
+    </div>
 {% endblock %}
