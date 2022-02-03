@@ -84,12 +84,12 @@ WSGI_APPLICATION = 'green_cinema.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'green',
-        'USER': 'postgres',
-        'PASSWORD': 'mysecretpassword',
-        'HOST': '59.25.214.211',
-        'PORT': '9944',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sys',
+        'USER': 'admin',
+        'PASSWORD': 'admin123!',
+        'HOST': 'database-2.chwvhozbjgpq.ap-northeast-2.rds.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
@@ -134,3 +134,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'user.UserModel'
