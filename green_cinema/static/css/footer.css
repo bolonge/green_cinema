@@ -7,11 +7,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .footer{
     width: 1000px;
-    height: 290px;
+    height: 305px;
 }
 
 
