@@ -31,5 +31,25 @@
   .login-content .second-form-content{
     height: 195px;
   }
+
+  .face-login{
+    display: flex;
+    margin-bottom: 15px;
+  }
   
- 
+  .face-icon{
+    background-image: url('https://assets.nflxext.com/ffe/siteui/login/images/FB-f-Logo__blue_57.png');
+    background-position: center;
+    background-size: cover;
+    width:20px;
+    height:20px;
+    margin-right: 5px;
+  }
+
+  .wrapper a{
+    text-decoration: none;
+  }
+
+  .wrapper a:hover{
+    color: white;
+  }

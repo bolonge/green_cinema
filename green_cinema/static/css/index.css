@@ -2,6 +2,7 @@
 @import url('./header.css');
 @import url('./movie/movie.css');
 @import url('./footer.css');
+@import url('./user/user.css');
 
 body {
     background-color: yellowgreen;
@@ -45,10 +46,12 @@ body {
 }
 
 .auth-input{
+    color: white;
     background-color:#333333;
     border:none
 }
 
 .auth-input:focus{
+    color: white;
     background-color: #333333;
 }

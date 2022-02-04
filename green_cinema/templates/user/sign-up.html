@@ -1,6 +1,6 @@
 {% extends '../index.html' %}
 {% block header_btn %}
-  <ul>
+  <ul style="list-style: none;">
     <li class="">
       <a class="btn btn-red font-color-white" href="/sign-in">
         로그인
@@ -17,10 +17,14 @@
 {% endblock %}
 {% block content %}
   <div class="wrapper">
-    <div class="login-content" style="height:450px">
+    <div class="login-content" style="height:550px">
       <div class="form-content">
-        <form>
+        <form method="post" action='/sign-up/'>{% csrf_token %}
           <h1 class="font-color-white login-title">회원가입</h1>
+          <div class="form-floating mb-3 input">
+            <input type="text" class="form-control auth-input" id="username" name="username" placeholder="유저네임"/>
+            <label for="floatingInput">유저네임</label>
+          </div>
           <div class="form-floating mb-3 input">
             <input type="email" class="form-control auth-input" id="email" name="email" placeholder="이메일"/>
             <label for="floatingInput">이메일</label>
