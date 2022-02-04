@@ -1,9 +1,12 @@
 from django.db import models
-# from user.models import User
+from user.models import UserModel
 
 
 # Create your models here.
 class Movie(models.Model):
+    class Meta:
+        db_table = "movie"
+
     title = models.CharField(max_length=100)
     year = models.CharField(max_length=4)
     genre = models.CharField(max_length=200)
@@ -12,9 +15,6 @@ class Movie(models.Model):
     cast = models.CharField(max_length=200, blank=True)
     film_rating_system = models.CharField(max_length=20, blank=True)
     information = models.TextField(blank=True)
-
-    class Meta:
-        db_table = "movie"
 
 
 class Rating(models.Model):
