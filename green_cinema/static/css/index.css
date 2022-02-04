@@ -46,10 +46,12 @@ html {
 }
 
 .auth-input{
+    color: white;
     background-color:#333333;
     border:none
 }
 
 .auth-input:focus{
+    color: white;
     background-color: #333333;
 }
