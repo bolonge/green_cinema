@@ -19,12 +19,8 @@ def sign_up_view(request):
         email = request.POST.get('email', None)
         password = request.POST.get('password', None)
         username = request.POST.get('username', None)
-        if email == '' :
-            return render(request, 'user/sign-up.html', {'error': '이메일을 넣어주세요 :)'})
-        elif password == '':
-            return render(request, 'user/sign-up.html', {'error': '비밀번호를 넣어주세요 :)'})
-        elif username == '':
-            return render(request, 'user/sign-up.html', {'error': '유저이름을 넣어주세요 :)'})
+        if email == '' or password == '' or username == '' :
+            return render(request, 'user/sign-up.html', {'error': '빈칸을 채워주세요 :)'}, )
         else:
             exist_user = get_user_model().objects.filter(email=email)
             if exist_user:
