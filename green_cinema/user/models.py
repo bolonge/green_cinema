@@ -10,7 +10,7 @@ from django.core.exceptions import FieldDoesNotExist, ValidationError
 class UserModel(AbstractUser):
     class Meta:
         db_table = "user"
-    nick_name = models.CharField(max_length=45)
+    # nick_name = models.CharField(max_length=45)
     # deleted_at에 삭제 요청받은 시간 저장.
     is_deleted = models.BooleanField(default=False, verbose_name='delete or not')
     # 데이터의 생성, 업데이트, 삭제시간 기록용

@@ -19,11 +19,11 @@
   <div class="wrapper">
     <div class="login-content" style="height:550px">
       <div class="form-content">
-        <form method="post" action='/sign-up/'>{% csrf_token %}
+        <form method="post" action='/sign-up/'>{% csrf_token %} 
           <h1 class="font-color-white login-title">회원가입</h1>
           <div class="form-floating mb-3 input">
             <input type="text" class="form-control auth-input" id="username" name="username" placeholder="유저네임"/>
-            <label for="floatingInput">유저네임</label>
+            <label for="floatingInput">유저네임</label>          
           </div>
           <div class="form-floating mb-3 input">
             <input type="email" class="form-control auth-input" id="email" name="email" placeholder="이메일"/>
@@ -33,6 +33,7 @@
             <input type="password" class="form-control auth-input" id="password" name="password" placeholder="비밀번호"/>
             <label for="floatingInput">비밀번호</label>
           </div>
+          <div>{{ error }}</div>
           <div class="btn-wrapper">
             <button class="btn btn-red font-color-white" style="padding:13px">회원가입</button>
           </div>
