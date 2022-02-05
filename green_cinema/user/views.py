@@ -49,5 +49,10 @@ def sign_in_view(request):
                 return render(request, 'user/sign-in.html', {'error': '회원정보가 일치하지 않습니다 ;( '}) # html과 작업해야 함.
 
 
+@login_required
+def logout(request):
+    auth.logout(request) # 인증되어있는 정보를 없애기
+    return redirect("/")
+
 def user_view(request):
     return render(request, 'user/user.html')
