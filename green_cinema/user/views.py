@@ -19,6 +19,7 @@ def sign_up_view(request):
     elif request.method == 'POST':
         email = request.POST.get('email', None)
         password = request.POST.get('password', None)
+        # password2 = request.POST.get('password2', None)
         username = request.POST.get('username', None)
         if email == '' or password == '' or username == '' :
             return render(request, 'user/sign-up.html', {'error': '빈칸을 채워주세요 :)'}, )
@@ -49,5 +50,33 @@ def sign_in_view(request):
                 return render(request, 'user/sign-in.html', {'error': '회원정보가 일치하지 않습니다 ;( '}) # html과 작업해야 함.
 
 
+@login_required
+def logout(request):
+    auth.logout(request) # 인증되어있는 정보를 없애기
+    return redirect("/")
+
 def user_view(request):
     return render(request, 'user/user.html')
+
+def user_view(request):
+    if request.method == 'GET':
+        user = request.user.is_authenticated #사용자가 로그인 되어있는지 먼저 확인
+        if user:
+            return render(request, 'user/user.html')
+
+    if request.method == 'POST':
+        username=get_user_model().objects.get(username=request.POST)
+        new_username=request.POST.get('username',None)
+        
+        
+       # if username is not None:
+            
+
+      #  <int:username>
+
+            
+         #   return render(request, )
+      #  else:
+       #     return redirect(('/sign-in'))
+    else:
+        return redirect('/')
