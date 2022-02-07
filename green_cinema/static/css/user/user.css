@@ -42,7 +42,7 @@
 
 .side-wrapper{
     z-index: 1;
-    min-width: 30%;
+    min-width: 25%;
     height: 100vh;
 }
 
@@ -58,7 +58,7 @@
 
 .main-wrapper{
     z-index: 1;
-    min-width: 60%;
+    min-width: 65%;
     height: 100vh;
 }   
 
@@ -77,6 +77,24 @@
     position: absolute;
     right: 50px;
     bottom: 0;
+}
+
+.profile-box {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(4, minmax(150px, 1fr));
+    height: 100px;
+}
+
+.profile-box a {
+    transition: transform .3s;
+}
+
+.profile-box a:hover {
+    transition: transform .3s;
+    -ms-transform: scale(1.4);
+    -webkit-transform: scale(1.4);
+    transform: scale(1.4);
 }
 
 @media screen and (max-width: 768px){
