@@ -10,13 +10,14 @@ from django.contrib.auth.models import BaseUserManager
 
 class UserProfileManager(BaseUserManager):
     """ Manager for user profiles """
-    def create_user(self, email, password=None):
+    def create_user(self, email, password=None, username=None):
         """ Create a new user profile """
         if not email:
             raise ValueError('User must have an email address')
 
         email = self.normalize_email(email)
         user = self.model(email=email)
+        username = self.model.normalize_username(username)
 
         user.set_password(password)
         user.save(using=self._db)
