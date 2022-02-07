@@ -24,6 +24,9 @@
         <a href="/logout" class="button-wrapper">
           <span class="btn btn-link list-btn">로그아웃</span>
         </a>
+        <a href="/user/delete" class="button-wrapper">
+          <span class="btn btn-link list-btn">회원 탈퇴</span>
+        </a>
       </div>
       <div class="main-wrapper">
         <div id="my_profile" class="profile-wrapper d-flex">
@@ -31,7 +34,7 @@
             <img class="lg-size" src="{% static '/img/user.png' %}"/>
           </div>
           <div class="form-content">
-            <form action="">
+            <form action="/user/" method="post">{% csrf_token %}
               <div class="form-floating mt-5 mb-3 input">
                 <input type="text" class="form-control auth-input" id="username" name="username" placeholder="username" value="{{ user.username }}"/>
                 <label for="floatingInput">유저네임</label>
@@ -41,7 +44,7 @@
                 <label for="floatingInput">이메일</label>
               </div>
               <div class="right-btn">
-                <button class="btn btn-red font-color-white" style="width:100px;padding:13px">수정하기</button>
+                <button type="submit" class="btn btn-red font-color-white" style="width:100px;padding:13px">수정하기</button>
               </div>
             </form>
           </div>
