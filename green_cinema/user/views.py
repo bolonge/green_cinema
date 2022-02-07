@@ -6,6 +6,8 @@ from django.contrib.auth import get_user_model #사용자가 데이터베이스 
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from movie.models import Rating
+from .forms import CustomUserChangeForm
+from .forms import ProfileForm
 
         
 
@@ -72,6 +74,44 @@ def user_view(request):
         if user: 
             return render(request, 'user/user.html', {"user_rating_list": user_rating_list})
 
+@login_required
+def edit_profile(request):
+    if request.method == "POST":
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            """
+            현재 유저의 프로필을 가져오고
+            받은 값으로 프로필을 갱신한다.
+            """
+            old_profile = request.user.profile
+            old_profile.username = form.cleaned_data['username']
+            old_profile.email = form.cleaned_data['email']
+            old_profile.save()
+            return redirect('/user')
+    elif request.method == "GET":
+        form = ProfileForm(instance=request.user.profile)
+        return render(request, 'user/user.html', {
+            'form': form,
+        })
+    # if request.method == 'POST':
+    #     form = CustomUserChangeForm(request.POST, instance=request.user)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('articles:index')
+    # else:
+    #     form = CustomUserChangeForm(instance=request.user)
+    # context = {
+    #     'form': form
+    # }
+    # return render(request, 'user/user.html', context)
+
+
+@login_required
+def delete_user(request):
+    user = UserModel(request, id)
+    user.delete()
+    return render(request, 'user/sign-in.html')
+
     # if request.method == 'POST':
     #     username=get_user_model().objects.get(username=request.POST)
     #     new_username=request.POST.get('username',None)
@@ -86,5 +126,5 @@ def user_view(request):
     #      #   return render(request, )
     #   #  else:
     #    #     return redirect(('/sign-in'))
-    else:
-        return redirect('/')
+    # else:
+    #     return redirect('/')
