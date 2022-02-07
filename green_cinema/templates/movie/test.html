@@ -6,14 +6,14 @@
 </head>
 <body>
 {#메인 페이지 데이터#}
-    <a href="{% url 'rating_create' %}">평점</a>
-    <div style="background-color:navajowhite; padding:20px;">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+{#이건 contents.html에 넣어서 테스트 하는 form#}
+{#    <form action='api/rating_create/{{ contents_movie.id }}' method="POST">#}
+{#        {% csrf_token %}#}
+{#        {{ form }}#}
+{#        <input type="submit" value="Submit">#}
+{#    </form>#}
+{#이건 contents.html에 넣어서 테스트 하는 form#}
+
     <div>
         {% for mv in movie %}
             <div>
