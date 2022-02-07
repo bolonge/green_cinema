@@ -65,3 +65,16 @@ class UserModel(AbstractUser, AbstractBaseUser, PermissionsMixin):
      return self.email
 
 
+# def passwordcheck(password):
+#     if len(password) < 8 or len(password) > 21 and not re.findall('[0-9]+', password) and not \
+#     re.findall('[a-z]+', password) or not re.findall('[A-Z]+', password):
+#         print('비밀번호 기준(숫자, 영문 대소문자 구성)에 맞지 않습니다;)')
+#         return False
+
+#     elif not re.findall('[`~!@#$%^&*(),<.>/?]+', password):
+#     # elif re.search('[`~!@#$%^&*(),<.>]'+, password) is None:
+#         print('비밀번호는 최소 1개 이상의 특수문자가 포함되어야 합니다 ;)')
+#         return False
+
+#     print('비밀번호 입력이 완료되었습니다.')
+#     return True

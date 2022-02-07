@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model #사용자가 데이터베이스 안에 있는지 검사하는 함수
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from movie.models import Rating
 
         
 
@@ -21,7 +22,7 @@ def sign_up_view(request):
         password = request.POST.get('password', None)
         password2 = request.POST.get('password2', None)
         username = request.POST.get('username', None)
-        print(username)
+       
         if email == '' or password == '' or username == '':
             return render(request, 'user/sign-up.html', {'error': '빈칸을 채워주세요 :)'}, )
 
@@ -65,10 +66,11 @@ def logout(request):
 
 
 def user_view(request):
-    if request.method == 'GET':
-        user = request.user.is_authenticated #사용자가 로그인 되어있는지 먼저 확인
-        if user:
-            return render(request, 'user/user.html')
+    if request.method == 'GET': 
+        user = request.user.is_authenticated # 사용자가 로그인 되어있는지 먼저 확인
+        user_rating_list = Rating.objects.filter(user_id=request.user.id) 
+        if user: 
+            return render(request, 'user/user.html', {"user_rating_list": user_rating_list})
 
     # if request.method == 'POST':
     #     username=get_user_model().objects.get(username=request.POST)
