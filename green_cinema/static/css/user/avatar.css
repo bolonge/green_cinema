@@ -1,6 +1,5 @@
 .img-wrapper{
     background-color: white;
-    border-radius: 50%;
 }
 
 .sm-size{
@@ -14,6 +13,6 @@
 }
 
 .lg-size{
-    width:8rem;
-    height: 8rem;
+    width:10rem;
+    height: 10rem;
 }
