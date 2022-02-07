@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model #사용자가 데이터베이스 
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from movie.models import Rating
-from .forms import CustomUserChangeForm
+# from .forms import CustomUserChangeForm
 from .forms import ProfileForm
 
         
