@@ -1,0 +1,19 @@
+.img-wrapper{
+    background-color: white;
+    border-radius: 50%;
+}
+
+.sm-size{
+    width:2rem;
+    height: 2rem;
+}
+
+.md-size{
+    width:3.5rem;
+    height: 3.5rem;
+}
+
+.lg-size{
+    width:8rem;
+    height: 8rem;
+}
