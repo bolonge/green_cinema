@@ -5,7 +5,7 @@
 @import url('./user/user.css');
 @import url('./user/avatar.css');
 
-html {
+body {
     background-color: yellowgreen;
 }
 
