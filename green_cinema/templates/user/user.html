@@ -1,8 +1,31 @@
 {% extends '../index.html' %}
-{% block header_btn %}{% endblock %}
+{% load static %}
+{% block background %}
+  <div class='user-background'></div>
+{% endblock %}
 {% block content %}
   <div class="profile-container">
-    <div class="select-list"></div>
-    <div class="show-profile"></div>
+    <div class="user-wrapper">
+      <div class="img-wrapper">
+        <img class="md-size" src="{% static '/img/user.png' %}"/>
+      </div>
+      <div class="name-wrapper">
+        <span>{{ user.username }}</span>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="side-wrapper">
+        <div class="button-wrapper">
+          <span class="btn btn-link list-btn">프로필</span>
+        </div>
+        <div class="button-wrapper">
+          <span class="btn btn-link list-btn">내가 평가한 영화</span>
+        </div>
+        <a href="/logout" class="button-wrapper">
+          <span class="btn btn-link list-btn">로그아웃</span>
+        </a>
+      </div>
+      <div class="main-wrapper"></div>
+    </div>
   </div>
 {% endblock %}
