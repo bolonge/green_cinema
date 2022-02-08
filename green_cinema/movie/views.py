@@ -89,13 +89,16 @@ def contents_view(request, id):
     # 영화 아이디로 Movie 테이블 조회
     contents_movie = Movie.objects.get(id=id)
     check_exist = existence_rating(request, id)
+    rating_data = Rating.objects.filter(movie_id=id)
     if check_exist == '0':
         form = RatingForm()
-        return render(request, 'movie/contents.html', {'contents_movie': contents_movie, 'form': form, "check_exist": check_exist})
+        return render(request, 'movie/contents.html',
+                      {'contents_movie': contents_movie, 'form': form, "check_exist": check_exist, "rating_data": rating_data})
         # return render(request, 'movie/contents_test.html', {'contents_movie': contents_movie, 'form': form, 'ms': '0'})
     else:
         form = RatingForm(instance=check_exist)
-        return render(request, 'movie/contents.html', {'contents_movie': contents_movie, 'form': form, 'check_exist': check_exist})
+        return render(request, 'movie/contents.html',
+                      {'contents_movie': contents_movie, 'form': form, 'check_exist': check_exist, "rating_data": rating_data})
         # return render(request, 'movie/contents_test.html', {'contents_movie': contents_movie, 'form': form, 'ms': '1'})
 
 
