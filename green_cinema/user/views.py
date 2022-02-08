@@ -26,6 +26,8 @@ def sign_up_view(request):
         elif password != password2:
             return render(request, 'user/sign-up.html', {'error': '인증비밀번호가 맞지 않습니다 ;)'})
 
+        elif UserModel.objects.filter(email=email).exists():
+            return render(request, 'user/sign-up.html', {'error': '이미 사용하고 있는 이메일입니다 ;)'})
         else:
             exist_user = get_user_model().objects.filter(email=email)
             if exist_user:
@@ -71,16 +73,21 @@ def user_view(request):
     if request.method == "POST":
         form = ProfileForm(request.POST)
         if form.is_valid():
-            print('성골')
             """
             현재 유저의 프로필을 가져오고
             받은 값으로 프로필을 갱신한다.
             """
+
             old_profile = UserModel.objects.get(id=request.user.id)
             old_profile.username = form.cleaned_data['username']
             old_profile.email = form.cleaned_data['email']
             old_profile.save()
+
             return redirect('/user')
+
+            # 원래 있는 정보들이면 실행(저장)이 안되게
+            # username 이나 email 둘 중 하나만 수정해도 완료되게.
+
         if not form.is_valid():
             return redirect('/user')
     elif request.method == 'GET':
