@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Movie, Rating
 from django.contrib.auth.decorators import login_required
-
+from .forms import RatingForm
 
 # Create your views here.
 def home(request):
@@ -53,5 +53,24 @@ def genre_view(request):
         return redirect('/')
 
 
-def contents_view(request):
-    return render(request, 'movie/contents.html')
+def contents_view(request, id):
+    contents_movie = Movie.objects.get(id=id)
+    # movie_rating = Rating.objects.get(movie_id=id)
+    form = RatingForm()
+    return render(request, 'movie/contents.html', {'contents_movie': contents_movie, 'form': form})
+
+@login_required
+def rating_create(request, id):
+    if request.method == 'POST': # POST 방식으로 요청이 들어왔을 때
+        form = RatingForm(request.POST)  # 입력된 내용들을 form이라는 변수에 저장
+        if form.is_valid(): # form이 유효하다면(models.py에서 정의한 필드에 적합하다면)
+            rating = form.save(commit=False)  # form 데이터를 가져온다. (commit=False : 바로 저장되는 기능을 홀딩)
+            rating.user_id = request.user
+            rating.movie_id = Movie.objects.get(id=id)
+            rating.save() # form 데이터를 DB에 저장한다.
+            return redirect('/')
+        else:
+            return redirect('/api/rating_create')
+    else: # GET 방식으로 요청이 들어왔을 때
+        form = RatingForm()
+        return render(request, 'movie/test.html', {'form': form})

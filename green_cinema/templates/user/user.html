@@ -1,8 +1,64 @@
 {% extends '../index.html' %}
-{% block header_btn %}{% endblock %}
+{% load static %}
+{% block background %}
+  <div class='user-background'></div>
+{% endblock %}
 {% block content %}
   <div class="profile-container">
-    <div class="select-list"></div>
-    <div class="show-profile"></div>
+    <div class="user-wrapper">
+      <div class="img-wrapper">
+        <img class="md-size" src="{% static '/img/user.png' %}"/>
+      </div>
+      <div class="name-wrapper">
+        <span>{{ user.username }}</span>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="side-wrapper">
+        <div class="button-wrapper">
+          <span class="btn btn-link list-btn" onclick="go_profile_list(this)">프로필</span>
+        </div>
+        <div class="button-wrapper">
+          <span class="btn btn-link list-btn" onclick="go_profile_list(this)">내가 평가한 영화</span>
+        </div>
+        <a href="/logout" class="button-wrapper">
+          <span class="btn btn-link list-btn">로그아웃</span>
+        </a>
+        <a href="/user/delete" class="button-wrapper">
+          <span class="btn btn-link list-btn">회원 탈퇴</span>
+        </a>
+      </div>
+      <div class="main-wrapper">
+        <div id="my_profile" class="profile-wrapper d-flex">
+          <div class="img-wrapper lg-size">
+            <img class="lg-size" src="{% static '/img/user.png' %}"/>
+          </div>
+          <div class="form-content">
+            <form action="/user/" method="post">{% csrf_token %}
+              <div class="form-floating mt-5 mb-3 input">
+                <input type="text" class="form-control auth-input" id="username" name="username" placeholder="username" value="{{ user.username }}"/>
+                <label for="floatingInput">유저네임</label>
+              </div>
+              <div class="form-floating mb-3 input">
+                <input type="text" class="form-control auth-input" id="email" name="email" placeholder="email" value="{{ user.email }}"/>
+                <label for="floatingInput">이메일</label>
+              </div>
+              <div class="right-btn">
+                <button type="submit" class="btn btn-red font-color-white" style="width:100px;padding:13px">수정하기</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div id="my_movie_list" class="d-none">
+          {% for movie in user_rating_list %}
+            <div class="profile-box" style="width: 18rem;">
+              <a class="" href="/contents">
+                <img src="{{movie.movie_id.image}}" class="card-img-top" alt="...">
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

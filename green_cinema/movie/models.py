@@ -34,16 +34,16 @@ class Rating(models.Model):
     RATING10 = '5'
 
     STAR_CHOICES = [
-        (RATING1, 1),
-        (RATING2, 2),
-        (RATING3, 3),
-        (RATING4, 4),
-        (RATING5, 5),
-        (RATING6, 6),
-        (RATING7, 7),
-        (RATING8, 8),
-        (RATING9, 9),
-        (RATING10, 10),
+        (RATING1, 0.5),
+        (RATING2, 1),
+        (RATING3, 1.5),
+        (RATING4, 2),
+        (RATING5, 2.5),
+        (RATING6, 3),
+        (RATING7, 3.5),
+        (RATING8, 4),
+        (RATING9, 4.5),
+        (RATING10, 5),
     ]
 
     user_id = models.ForeignKey('user.UserModel', related_name="user", on_delete=models.CASCADE, db_column="user_id")
