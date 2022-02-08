@@ -1,11 +1,24 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-    <!-- MAIN CONTAINER -->
-    {{ suggestion_list }}
+    <h1>추천컨텐츠</h1>
     <section class="main-container">
         <div class="location" id="home">
+        <div class="box">
+            {% for i in suggestion_list %}
+                    <div>
+                        {{ i.title }}
+                        <a><img src="{{ i.image }}" alt="text"></a>
+                        <div style="text-align: right">
+                            <a href="/contents/{{ i.id }}">
+                                <span class="badge rounded-pill bg-success">보기</span>
+                            </a>
+                        </div>
+                    </div>
 
+            {% endfor %}
+        </div>
+            <h1>오늘의 영화</h1>
             <div class="box">
                 {% for mv in movie %}
                     <div>
@@ -27,5 +40,5 @@
             </div>
         </div>
     </section>
-    <!-- END OF MAIN CONTAINER -->
+
 {% endblock %}
