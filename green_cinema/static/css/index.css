@@ -4,10 +4,6 @@
 @import url('./user/user.css');
 @import url('./footer.css');
 
-body {
-    background-color: yellowgreen;
-}
-
 #background{
     width: 100%;
     height: 156vh;
