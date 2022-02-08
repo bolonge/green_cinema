@@ -1,5 +1,71 @@
 {% extends 'index.html' %}
-
 {% block content %}
-    <p>콘텐츠 상세 페이지</p>
+  <div class="content-container">
+    <div class='content-image' style="background-image:url('{{contents_movie.image}}')">
+      <div class="image-divider"></div>
+    </div>
+    <div class="content-wrapper">
+      <div class="content-info-wrapper">
+        <div class="content-title">{{contents_movie.title}}</div>
+        <div class="content-genre">{{contents_movie.genre}}</div>
+      </div>
+      <div class="content-rating-form-wrapper">
+        {% if result == "0" %}
+          <div class="">
+            <form action="api/rating_create/{{ contents_movie.id }}" method="POST">
+              {% csrf_token %}
+              <div class="rating-wrapper">
+                <select class="form-select" name="rating" id="id_rating">
+                  <option value="0.5">0.5</option>
+                  <option value="1">1</option>
+                  <option value="1.5">1.5</option>
+                  <option value="2">2</option>
+                  <option value="2.5">2.5</option>
+                  <option value="3">3</option>
+                  <option value="3.5">3.5</option>
+                  <option value="4">4</option>
+                  <option value="4.5">4.5</option>
+                  <option value="5" selected="">5</option>
+                </select>
+              </div>
+              <div class="form-floating mb-3 input">
+                <input type="text" class="form-control auth-input" id="comment" name="comment" placeholder="comment"/>
+                <label for="floatingInput">comment</label>
+              </div>
+              <div class="">
+                <button type="submit" class="btn btn-outline-light" style="padding:13px">평가하기</button>
+              </div>
+            </form>
+          </div>
+        {% else %}
+          <div>
+            <form action="api/rating_update/{{ contents_movie.id }}" method="POST">
+              {% csrf_token %}
+              <div class="rating-wrapper">
+                <select class="form-select" name="rating" id="id_rating">
+                  <option value="0.5">0.5</option>
+                  <option value="1">1</option>
+                  <option value="1.5">1.5</option>
+                  <option value="2">2</option>
+                  <option value="2.5">2.5</option>
+                  <option value="3">3</option>
+                  <option value="3.5">3.5</option>
+                  <option value="4">4</option>
+                  <option value="4.5">4.5</option>
+                  <option value="5" selected="">5</option>
+                </select>
+              </div>
+              <div class="form-floating mb-3 input">
+                <input type="text" value="{{result.comment}}" class="form-control auth-input" id="comment" name="comment" placeholder="comment"/>
+                <label for="floatingInput">comment</label>
+              </div>
+              <div class="btn-wrapper">
+                <button type="submit" class="btn btn-outline-light" style="padding:13px">수정하기</button>
+              </div>
+            </form>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 {% endblock %}

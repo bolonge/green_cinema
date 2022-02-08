@@ -1,0 +1,37 @@
+.content-container{
+    width: 100%;
+    height: 100vh;
+    color: #adbac7;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.content-image{
+    width: 100%;
+    height: 166vh;
+    background-position: center;
+    background-size: cover;
+    margin-top: -80px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.image-divider{
+    width: 100%;
+    height: 100px;
+    background-image: linear-gradient(to top,rgba(24,24,24,1) 0,rgba(0,0,0,0) 100%);
+}
+
+.content-wrapper{
+    padding: 30px;
+    z-index: 0;
+    width: 100%;
+    height: 50%;
+    background-color: rgba(24, 24, 24, 1);
+}
+
+.rating-wrapper{
+    width: 100px;
+}

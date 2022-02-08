@@ -1,9 +1,8 @@
-@import url('./user/auth.css');
 @import url('./header.css');
 @import url('./movie/movie.css');
-@import url('./footer.css');
+@import url('./movie/content.css');
 @import url('./user/user.css');
-@import url('./user/avatar.css');
+@import url('./footer.css');
 
 body {
     background-color: yellowgreen;
