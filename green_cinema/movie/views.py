@@ -59,7 +59,7 @@ def main_view(request):
                     movie = Movie.objects.get(id=result)
                     suggestion_list.append(movie)
 
-                return render(request, 'movie/main.html', {'movie': movie_shuffle[:50], 'suggestion_list': suggestion_list[:7]})
+                return render(request, 'movie/main.html', {'movie': movie_shuffle[:50], 'suggestion_list': suggestion_list[:6]}) 
 
             else:
                 return render(request, 'movie/main.html', {'movie': movie_shuffle[:50]})
