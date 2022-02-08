@@ -1,11 +1,15 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-    <h1>추천컨텐츠</h1>
+
+
     <section class="main-container">
         <div class="location" id="home">
-        <div class="box">
-            {% for i in suggestion_list %}
+            {% if suggestion_list %}
+                <h1>추천컨텐츠</h1>
+            {% endif %}
+            <div class="box">
+                {% for i in suggestion_list %}
                     <div>
                         {{ i.title }}
                         <a><img src="{{ i.image }}" alt="text"></a>
@@ -16,8 +20,8 @@
                         </div>
                     </div>
 
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
             <h1>오늘의 영화</h1>
             <div class="box">
                 {% for mv in movie %}
