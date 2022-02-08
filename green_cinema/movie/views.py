@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Movie, Rating
 from django.contrib.auth.decorators import login_required
 from .forms import RatingForm
+from random import randrange, shuffle
 import csv
 
 # Create your views here.
@@ -22,10 +23,12 @@ def main_view(request):
         user = request.user.is_authenticated
         if user:
             # Movie.objects.all() : 무비 모델에 있는 모든 오브젝트를 불러옴
-            all_movie = Movie.objects.all()
-            return render(request, 'movie/main.html', {'movie': all_movie})
+            all_movie = list(Movie.objects.all())
+            shuffle(all_movie)
+            movie_shuffle = all_movie
+            return render(request, 'movie/main.html', {'movie': movie_shuffle[:50]})
             # test.html 에서 데이터 response 확인 완료
-            # return render(request, 'movie/test.html', {'movie': all_movie})
+            # return render(request, 'movie/test.html', {'movie': movie_shuffle[:50]})
         else:
             return redirect(('/sign-up'))
     else:
