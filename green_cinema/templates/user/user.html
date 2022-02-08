@@ -21,12 +21,16 @@
         <div class="button-wrapper">
           <span class="btn btn-link list-btn" onclick="go_profile_list(this)">내가 평가한 영화</span>
         </div>
-        <a href="/logout" class="button-wrapper">
-          <span class="btn btn-link list-btn">로그아웃</span>
-        </a>
-        <a href="/user/delete" class="button-wrapper">
-          <span class="btn btn-link list-btn">회원 탈퇴</span>
-        </a>
+        <div class="button-wrapper">
+          <a href="/logout">
+            <span class="btn btn-link list-btn">로그아웃</span>
+          </a>
+        </div>
+        <div class="button-wrapper">
+          <a href="/user/delete" class="button-wrapper">
+            <span class="btn btn-link list-btn">회원 탈퇴</span>
+          </a>
+        </div>
       </div>
       <div class="main-wrapper">
         <div id="my_profile" class="profile-wrapper d-flex">
@@ -50,13 +54,13 @@
           </div>
         </div>
         <div id="my_movie_list" class="d-none">
-          {% for movie in user_rating_list %}
-            <div class="profile-box" style="width: 18rem;">
+          <div class="profile-box">
+            {% for movie in user_rating_list %}
               <a class="" href="/contents/{{movie.movie_id.id}}">
                 <img src="{{movie.movie_id.image}}" class="card-img-top" alt="...">
               </a>
-            </div>
-          {% endfor %}
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>

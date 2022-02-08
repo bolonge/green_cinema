@@ -32,6 +32,29 @@
     background-color: rgba(24, 24, 24, 1);
 }
 
+.content-info-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.content-title{
+font-size: 30px;
+}
+
+.content-genre{
+
+}
+
+.content-rating-form-container{
+    width: 100%;
+}
+
+.form-wrapper{
+    width: 50%;
+}
+
 .rating-wrapper{
     width: 100px;
 }
