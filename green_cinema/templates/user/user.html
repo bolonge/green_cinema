@@ -52,7 +52,7 @@
         <div id="my_movie_list" class="d-none">
           {% for movie in user_rating_list %}
             <div class="profile-box" style="width: 18rem;">
-              <a class="" href="/contents">
+              <a class="" href="/contents/{{movie.movie_id.id}}">
                 <img src="{{movie.movie_id.image}}" class="card-img-top" alt="...">
               </a>
             </div>
