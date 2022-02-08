@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Movie, Rating
 from django.contrib.auth.decorators import login_required
 from .forms import RatingForm
+import csv
 
 # Create your views here.
 def home(request):
@@ -52,13 +53,31 @@ def genre_view(request):
     else:
         return redirect('/')
 
+# rating 존재 확인 함수 / rating테이블에서 user_id, movie_id가 일치하는 데이터를 리턴, 데이터가 없다면 오류 발생 '0'을 리턴
+def existence_rating(request, id):
+    try:
+        my_rating = get_object_or_404(Rating, user_id=request.user.id, movie_id=id)
+        return my_rating
+    except:
+        return '0'
 
+
+# contents.html(콘텐츠 상세파일) 호출 함수
 def contents_view(request, id):
+    # 영화 아이디로 Movie 테이블 조회
     contents_movie = Movie.objects.get(id=id)
-    # movie_rating = Rating.objects.get(movie_id=id)
-    form = RatingForm()
-    return render(request, 'movie/contents.html', {'contents_movie': contents_movie, 'form': form})
+    result = existence_rating(request, id)
+    if result == '0':
+        form = RatingForm()
+        return render(request, 'movie/contents.html', {'contents_movie': contents_movie, 'form': form, 'ms': '0'})
+        # return render(request, 'movie/contents_test.html', {'contents_movie': contents_movie, 'form': form, 'ms': '0'})
+    else:
+        form = RatingForm(instance=result)
+        return render(request, 'movie/contents.html', {'contents_movie': contents_movie, 'form': form, 'ms': '1'})
+        # return render(request, 'movie/contents_test.html', {'contents_movie': contents_movie, 'form': form, 'ms': '1'})
 
+
+# rating 생성 함수
 @login_required
 def rating_create(request, id):
     if request.method == 'POST': # POST 방식으로 요청이 들어왔을 때
@@ -68,9 +87,25 @@ def rating_create(request, id):
             rating.user_id = request.user
             rating.movie_id = Movie.objects.get(id=id)
             rating.save() # form 데이터를 DB에 저장한다.
-            return redirect('/')
+            return redirect('/contents/' + str(id))
         else:
-            return redirect('/api/rating_create')
+            return redirect('/contents/' + str(id))
     else: # GET 방식으로 요청이 들어왔을 때
-        form = RatingForm()
-        return render(request, 'movie/test.html', {'form': form})
+        return redirect('/contents/' + str(id))
+
+# rating 업데이트 함수
+@login_required
+def rating_update(request, id):
+    if request.method == 'POST':
+        # rating 테이블에서 user_id, movie_id 일치하는 데이터 가져옴 / update함수는 데이터가 있는 경우에만 호출 되기 때문에 오류뜨면 안됨 / but 나중에 오류처리는 해야될듯?
+        my_rating = get_object_or_404(Rating, user_id=request.user.id, movie_id=id)
+        form = RatingForm(request.POST, instance=my_rating) # form 변수에 request.POST내용을 가져와서 이미 있는 Rating클래스의 인스턴스에(my_rating) 업데이트
+        if form.is_valid():
+            rating = form.save(commit=False)  # form 데이터를 가져온다. (commit=False : 바로 저장되는 기능을 홀딩) // 사실 여기서는 바로 저장해도 문제없을듯
+            rating.save()  # form 데이터를 DB에 저장한다.
+            return redirect('/contents/' + str(id))
+        else:
+            return redirect('/contents/' + str(id))
+    else: # GET 방식으로 요청이 들어왔을 때
+        return redirect('/contents/' + str(id))
+
