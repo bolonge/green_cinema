@@ -5,7 +5,15 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from movie.models import Rating
 from .forms import ProfileForm
+# # email
+# from django.core.mail import EmailMessage
 
+# def send_email(request):
+#     subject = "message"
+#     to = ["rollypinl@gmail.com"]
+#     from_email = "2022have12@gmail.com"
+#     message = "메시지 테스트"
+#     EmailMessage(subject=subject, body=message, to=to, from_email=from_email).send()
 
 def sign_up_view(request):
     if request.method == 'GET':
@@ -77,19 +85,29 @@ def user_view(request):
             현재 유저의 프로필을 가져오고
             받은 값으로 프로필을 갱신한다.
             """
+            old_user = UserModel.objects.get(id=request.user.id)
+            if old_user.email != form.cleaned_data["email"]:
+                if UserModel.objects.filter(email=form.cleaned_data["email"]).exists():
+                    return render(request, 'user/user.html', {'error':'이미 존재하는 이메일입니다 ;)'})
 
-            old_profile = UserModel.objects.get(id=request.user.id)
-            old_profile.username = form.cleaned_data['username']
-            old_profile.email = form.cleaned_data['email']
-            old_profile.save()
+            else:
+                old_user.email = form.cleaned_data["email"]
+                old_user.username = form.cleaned_data["username"]
+                old_user.save()
 
-            return redirect('/user')
+            # old_profile = UserModel.objects.get(id=request.user.id)
+            # old_profile.username = form.cleaned_data['username']
+            # old_profile.email = form.cleaned_data['email']
+            # old_profile.save()
+
+                return redirect('/user')
 
             # 원래 있는 정보들이면 실행(저장)이 안되게
             # username 이나 email 둘 중 하나만 수정해도 완료되게.
 
-        if not form.is_valid():
-            return redirect('/user')
+        else:
+            return render(request, 'user/user.html', {'error': '이미 사용하는 이메일입니다 ;) '})
+            
     elif request.method == 'GET':
         user = request.user.is_authenticated  # 사용자가 로그인 되어있는지 먼저 확인
         user_rating_list = Rating.objects.filter(user_id=request.user.id)
@@ -103,3 +121,6 @@ def delete_user(request):
     user = UserModel.objects.get(id=request.user.id)
     user.delete()
     return render(request, 'user/sign-in.html')
+
+
+
