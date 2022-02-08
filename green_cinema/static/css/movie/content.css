@@ -43,18 +43,39 @@
 font-size: 30px;
 }
 
-.content-genre{
-
-}
-
 .content-rating-form-container{
     width: 100%;
 }
 
 .form-wrapper{
-    width: 50%;
+    width: 100%;
+    padding:20px;
 }
 
 .rating-wrapper{
     width: 100px;
+}
+
+.comment-list-container{
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.comment-list-container::-webkit-scrollbar {
+    display: none;
+}
+
+.comment-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 768px){
+    .content-info-wrapper{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
 }
