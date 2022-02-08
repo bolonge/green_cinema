@@ -69,16 +69,16 @@
           {% endif %}
         </div>
         <div class="comment-list-container">
-          <div class="comment-wrapper">
-            {% for rating in rating_data %}
+          {% for rating in rating_data %}
+            <div class="comment-wrapper">
               <div class="comment">
                 {{rating.comment}}
               </div>
               <div class="rating">
                 {{rating.rating}}
               </div>
-            {% endfor %}
-          </div>
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>
