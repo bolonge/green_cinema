@@ -9,12 +9,12 @@
         <div class="content-title">{{contents_movie.title}}</div>
         <div class="content-genre">{{contents_movie.genre}}</div>
       </div>
-      <div class="content-rating-form-wrapper">
-        {% if result == "0" %}
-          <div class="">
+      <div class="content-rating-form-container">
+        {% if check_exist == "0" %}
+          <div class="form-wrapper">
             <form action="api/rating_create/{{ contents_movie.id }}" method="POST">
               {% csrf_token %}
-              <div class="rating-wrapper">
+              <div class="rating-wrapper mb-4">
                 <select class="form-select" name="rating" id="id_rating">
                   <option value="0.5">0.5</option>
                   <option value="1">1</option>
@@ -28,7 +28,7 @@
                   <option value="5" selected="">5</option>
                 </select>
               </div>
-              <div class="form-floating mb-3 input">
+              <div class="form-floating mb-4">
                 <input type="text" class="form-control auth-input" id="comment" name="comment" placeholder="comment"/>
                 <label for="floatingInput">comment</label>
               </div>
@@ -38,11 +38,12 @@
             </form>
           </div>
         {% else %}
-          <div>
+          <div class="form-wrapper">
             <form action="api/rating_update/{{ contents_movie.id }}" method="POST">
               {% csrf_token %}
-              <div class="rating-wrapper">
+              <div class="rating-wrapper mb-4">
                 <select class="form-select" name="rating" id="id_rating">
+                  <option selected="selected">{{check_exist.rating}}</option>
                   <option value="0.5">0.5</option>
                   <option value="1">1</option>
                   <option value="1.5">1.5</option>
@@ -52,14 +53,14 @@
                   <option value="3.5">3.5</option>
                   <option value="4">4</option>
                   <option value="4.5">4.5</option>
-                  <option value="5" selected="">5</option>
+                  <option value="5">5</option>
                 </select>
               </div>
-              <div class="form-floating mb-3 input">
-                <input type="text" value="{{result.comment}}" class="form-control auth-input" id="comment" name="comment" placeholder="comment"/>
+              <div class="form-floating mb-4">
+                <input type="text" value="{{check_exist.comment}}" class="form-control auth-input" id="comment" name="comment" placeholder="comment"/>
                 <label for="floatingInput">comment</label>
               </div>
-              <div class="btn-wrapper">
+              <div class="btn-wrapper" style="ali">
                 <button type="submit" class="btn btn-outline-light" style="padding:13px">수정하기</button>
               </div>
             </form>
