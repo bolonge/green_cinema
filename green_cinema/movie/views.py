@@ -28,7 +28,19 @@ def main_view(request):
             all_movie = list(Movie.objects.all())
             shuffle(all_movie)
             movie_shuffle = all_movie
-            return render(request, 'movie/main.html', {'movie': movie_shuffle[:50]})
+            my_rating = Rating.objects.filter(user_id=request.user.id).exists()
+            print(my_rating)
+            if my_rating == True:
+                results = [1, 2]
+                suggestion_list = []
+                for result in results:
+                    movie = Movie.objects.get(id=result)
+                    suggestion_list.append(movie)
+
+                return render(request, 'movie/main.html', {'movie': movie_shuffle[:50], 'suggestion_list': suggestion_list[:7]})
+
+            else:
+                return render(request, 'movie/main.html', {'movie': movie_shuffle[:50]})
             # test.html 에서 데이터 response 확인 완료
             # return render(request, 'movie/test.html', {'movie': movie_shuffle[:50]})
         else:
