@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Movie, Rating
 from django.contrib.auth.decorators import login_required
 from .forms import RatingForm
-from random import randrange, shuffle
+from random import shuffle
 import csv
 import pandas as pd
 import numpy as np
@@ -19,6 +19,25 @@ def home(request):
     # 사용자가 없으면 로그인화면
     else:
         return redirect(('/sign-in'))
+
+
+
+def show_movie(request):
+
+    ratings = pd.read_csv('../static/data/ratings (1).csv')
+    movies = pd.read_csv('../static/data/movies (1).csv')
+
+    pd.set_option('display.max_columns', 10)
+    pd.set_option('display.width', 300)
+    movie_ratings = pd.merge(ratings, movies, on='movieId')
+    title_user = movie_ratings.pivot_table('rating', index='userId', columns='movieId')
+
+    title_user = title_user.fillna(0)
+    user_based_collab = cosine_similarity(title_user, title_user)
+    user_based_collab = pd.DataFrame(user_based_collab, index=title_user.index, columns=title_user.index)
+    user = user_based_collab[request.user.id].sort_values(ascending=False)[:10].index[1]
+    result = title_user.query(f"userId == {user}").sort_values(ascending=False, by=user, axis=1)
+    print(result)
 
 
 def main_view(request):
@@ -115,13 +134,13 @@ def rating_create(request, id):
             rating.user_id = request.user
             rating.movie_id = Movie.objects.get(id=id)
             rating.save()  # form 데이터를 DB에 저장한다.
-            f = open('ratings.csv', 'a', newline='')
+            f = open('../static/data/ratings (1).csv', 'a', newline='')
             wr = csv.writer(f)
             wr.writerow([request.user.id, rating.movie_id.id, rating.rating])
             f.close()
-            d = pd.read_csv('ratings.csv', sep=",")
+            d = pd.read_csv('../static/data/ratings (1).csv', sep=",")
             d = d.drop_duplicates(['userId', 'movieId'], keep='last')
-            d.to_csv('ratings.csv', index=False)
+            d.to_csv('../static/data/ratings (1).csv', index=False)
             return redirect('/contents/' + str(id))
         else:
             return redirect('/contents/' + str(id))
@@ -144,13 +163,13 @@ def rating_update(request, id):
             # form 데이터를 가져온다. (commit=False : 바로 저장되는 기능을 홀딩) // 사실 여기서는 바로 저장해도 문제없을듯
             rating = form.save(commit=False)
             rating.save()  # form 데이터를 DB에 저장한다.
-            f = open('ratings.csv', 'a', newline='')
+            f = open('../static/data/ratings (1).csv', 'a', newline='')
             wr = csv.writer(f)
             wr.writerow([request.user.id, rating.movie_id.id, rating.rating])
             f.close()
-            d = pd.read_csv('ratings.csv', sep=",")
+            d = pd.read_csv('../static/data/ratings (1).csv', sep=",")
             d = d.drop_duplicates(['userId', 'movieId'], keep='last')
-            d.to_csv('ratings.csv', index=False)
+            d.to_csv('../static/data/ratings (1).csv', index=False)
             return redirect('/contents/' + str(id))
         else:
             return redirect('/contents/' + str(id))
@@ -158,20 +177,4 @@ def rating_update(request, id):
         return redirect('/contents/' + str(id))
 
 
-@login_required
-def show_movie(request):
 
-    ratings = pd.read_csv('/Users/leeseongho/Desktop/green_cinema/green_cinema/static/data/ratings (1).csv')
-    movies = pd.read_csv('/Users/leeseongho/Desktop/green_cinema/green_cinema/static/data/movies (1).csv')
-
-    pd.set_option('display.max_columns', 10)
-    pd.set_option('display.width', 300)
-    movie_ratings = pd.merge(ratings, movies, on='movieId')
-    title_user = movie_ratings.pivot_table('rating', index='userId', columns='movieId')
-
-    title_user = title_user.fillna(0)
-    user_based_collab = cosine_similarity(title_user, title_user)
-    user_based_collab = pd.DataFrame(user_based_collab, index=title_user.index, columns=title_user.index)
-    user = user_based_collab[request.user.id].sort_values(ascending=False)[:10].index[1]
-    result = title_user.query(f"userId == {user}").sort_values(ascending=False, by=user, axis=1)
-    print(result)
