@@ -107,6 +107,12 @@ header {
   grid-template-columns: repeat(6, minmax(100px, 1fr));
 }
 
+.box .movie-info{
+  display: flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
 .box a {
   transition: transform .3s;
 }

@@ -2,37 +2,36 @@
 {% load static %}
 {% block content %}
 
+  <section class="main-container">
+    <div class="location" id="home">
+      {% if suggestion_list %}
+        <h1>추천컨텐츠</h1>
+      {% endif %}
+      <div class="box">
+        {% for i in suggestion_list %}
+          <div class="movie-info">
+            {{ i.title }}
+            <a href="/contents/{{ i.id }}"><img src="{{ i.image }}" alt="text"></a>
+          </div>
 
-    <section class="main-container">
-        <div class="location" id="home">
-            {% if suggestion_list %}
-                <h1>추천컨텐츠</h1>
-            {% endif %}
-            <div class="box">
-                {% for i in suggestion_list %}
-                    <div>
-                        {{ i.title }}
-                        <a href="/contents/{{ i.id }}"><img src="{{ i.image }}" alt="text"></a>
-                    </div>
-
-                {% endfor %}
-            </div>
-            <h1>오늘의 영화</h1>
-            <div class="box">
-                {% for mv in movie %}
-                    <div>
-                        {{ mv.title }}
-                        {{ mv.year }}
-                        {{ mv.genre }}
-                        <a href="/contents/{{ mv.id }}"><img src="{{ mv.image }}" alt=""></a>
-                        {{ mv.video }}
-                        {{ mv.cast }}
-                        {{ mv.film_rating_system }}
-                        {{ mv.information }}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
+        {% endfor %}
+      </div>
+      <h1>오늘의 영화</h1>
+      <div class="box">
+        {% for mv in movie %}
+          <div class="movie-info">
+            {{ mv.title }}
+            {{ mv.year }}
+            {{ mv.genre }}
+            <a href="/contents/{{ mv.id }}"><img src="{{ mv.image }}" alt=""></a>
+            {{ mv.video }}
+            {{ mv.cast }}
+            {{ mv.film_rating_system }}
+            {{ mv.information }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
 
 {% endblock %}
