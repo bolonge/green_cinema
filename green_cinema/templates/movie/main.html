@@ -9,7 +9,7 @@
       {% endif %}
       <div class="box">
         {% for i in suggestion_list %}
-          <div class="movie-info">
+          <div class="d-flex flex-column justify-content-between">
             {{ i.title }}
             <a href="/contents/{{ i.id }}"><img src="{{ i.image }}" alt="text"></a>
           </div>
@@ -19,7 +19,7 @@
       <h1>오늘의 영화</h1>
       <div class="box">
         {% for mv in movie %}
-          <div class="movie-info">
+          <div class="d-flex flex-column justify-content-between">
             {{ mv.title }}
             {{ mv.year }}
             {{ mv.genre }}
