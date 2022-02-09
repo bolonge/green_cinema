@@ -7,6 +7,8 @@ import csv
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+import io
+import boto3
 # Create your views here.
 
 
@@ -23,9 +25,12 @@ def home(request):
 
 
 def show_movie(request):
+    s3_client = boto3.client('s3')
+    s3_rating_object = s3_client.get_object(Bucket="green-cinema", Key="data/ratings (1).csv")
+    s3_movie_object = s3_client.get_object(Bucket="green-cinema", Key="data/movies (1).csv")
 
-    ratings = pd.read_csv('static/data/ratings (1).csv')
-    movies = pd.read_csv('static/data/movies (1).csv')
+    ratings = pd.read_csv(s3_rating_object['Body'])
+    movies = pd.read_csv(s3_movie_object['Body'])
 
     pd.set_option('display.max_columns', 10)
     pd.set_option('display.width', 300)
@@ -83,9 +88,11 @@ def genre_view(request):
             for gen in genre_list:
                 # Movie 모델의 오브젝트를 가져 오는데 genre 컬럼 안에 gen이 포함되어 있는 경우만 필터링 해서 가져옴
                 # type : list 안에 object / [object, object]
-                movie_list = Movie.objects.filter(genre__contains=gen)
+                movie_list = list(Movie.objects.filter(genre__contains=gen))
+                shuffle(movie_list)
+                movie_shuffle = movie_list
                 # type : 딕셔너리에 gen를 키로 가지고 movie_list를 밸류로 가지는 객체 추가
-                movie_genre_dict_list.append({gen: movie_list})
+                movie_genre_dict_list.append({gen: movie_shuffle[:6]})
             return render(request, 'movie/genre.html', {'genre_list': genre_list, 'movie_genre_dict_list': movie_genre_dict_list})
             # test.html에서 데이터 response 확인 완료
             # return render(request, 'movie/test.html', {'genre_list': genre_list, 'movie_genre_dict_list': movie_genre_dict_list})
@@ -135,13 +142,24 @@ def rating_create(request, id):
             rating.user_id = request.user
             rating.movie_id = Movie.objects.get(id=id)
             rating.save()  # form 데이터를 DB에 저장한다.
-            f = open('static/data/ratings (1).csv', 'a', newline='')
-            wr = csv.writer(f)
-            wr.writerow([request.user.id, rating.movie_id.id, rating.rating])
-            f.close()
-            d = pd.read_csv('static/data/ratings (1).csv', sep=",")
-            d = d.drop_duplicates(['userId', 'movieId'], keep='last')
-            d.to_csv('static/data/ratings (1).csv', index=False)
+            # f = open('static/data/ratings (1).csv', 'a', newline='')
+            # wr = csv.writer(f)
+            # wr.writerow([request.user.id, rating.movie_id.id, rating.rating])
+            # f.close()
+            # d = pd.read_csv('static/data/ratings (1).csv', sep=",")
+            # d = d.drop_duplicates(['userId', 'movieId'], keep='last')
+            # d.to_csv('static/data/ratings (1).csv', index=False)
+            s3_client = boto3.client('s3')
+            s3_object = s3_client.get_object(Bucket="green-cinema", Key="data/ratings (1).csv")
+            # read the file
+            df = pd.read_csv(s3_object['Body'])
+            new = pd.DataFrame(
+                {"userId": [request.user.id], "movieId": [rating.movie_id.id], "rating": [rating.rating]})
+            concat = pd.concat((df, new)).reset_index(drop=True)
+            concat = concat.drop_duplicates(['userId', 'movieId'], keep='last')
+            csv_buffer = io.StringIO()
+            concat.to_csv(csv_buffer, index=False)
+            s3_client.put_object(Body=csv_buffer.getvalue(), Bucket='green-cinema', Key='data/ratings (1).csv')
             return redirect('/contents/' + str(id))
         else:
             return redirect('/contents/' + str(id))
@@ -164,13 +182,23 @@ def rating_update(request, id):
             # form 데이터를 가져온다. (commit=False : 바로 저장되는 기능을 홀딩) // 사실 여기서는 바로 저장해도 문제없을듯
             rating = form.save(commit=False)
             rating.save()  # form 데이터를 DB에 저장한다.
-            f = open('static/data/ratings (1).csv', 'a', newline='')
-            wr = csv.writer(f)
-            wr.writerow([request.user.id, rating.movie_id.id, rating.rating])
-            f.close()
-            d = pd.read_csv('static/data/ratings (1).csv', sep=",")
-            d = d.drop_duplicates(['userId', 'movieId'], keep='last')
-            d.to_csv('static/data/ratings (1).csv', index=False)
+            # f = open('static/data/ratings (1).csv', 'a', newline='')
+            # wr = csv.writer(f)
+            # wr.writerow([request.user.id, rating.movie_id.id, rating.rating])
+            # f.close()
+            # d = pd.read_csv('static/data/ratings (1).csv', sep=",")
+            # d = d.drop_duplicates(['userId', 'movieId'], keep='last')
+            # d.to_csv('static/data/ratings (1).csv', index=False)
+            s3_client = boto3.client('s3')
+            s3_object = s3_client.get_object(Bucket="green-cinema", Key="data/ratings (1).csv")
+            # read the file
+            df = pd.read_csv(s3_object['Body'])
+            new = pd.DataFrame({"userId": [request.user.id], "movieId": [rating.movie_id.id], "rating": [rating.rating]})
+            concat = pd.concat((df, new)).reset_index(drop=True)
+            concat = concat.drop_duplicates(['userId', 'movieId'], keep='last')
+            csv_buffer = io.StringIO()
+            concat.to_csv(csv_buffer, index=False)
+            s3_client.put_object(Body=csv_buffer.getvalue(), Bucket='green-cinema', Key='data/ratings (1).csv')
             return redirect('/contents/' + str(id))
         else:
             return redirect('/contents/' + str(id))

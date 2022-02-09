@@ -12,12 +12,7 @@
                 {% for i in suggestion_list %}
                     <div>
                         {{ i.title }}
-                        <a><img src="{{ i.image }}" alt="text"></a>
-                        <div style="text-align: right">
-                            <a href="/contents/{{ i.id }}">
-                                <span class="badge rounded-pill bg-success">보기</span>
-                            </a>
-                        </div>
+                        <a href="/contents/{{ i.id }}"><img src="{{ i.image }}" alt="text"></a>
                     </div>
 
                 {% endfor %}
@@ -29,16 +24,11 @@
                         {{ mv.title }}
                         {{ mv.year }}
                         {{ mv.genre }}
-                        <a href=""><img src="{{ mv.image }}" alt=""></a>
+                        <a href="/contents/{{ mv.id }}"><img src="{{ mv.image }}" alt=""></a>
                         {{ mv.video }}
                         {{ mv.cast }}
                         {{ mv.film_rating_system }}
                         {{ mv.information }}
-                        <div style="text-align: right">
-                            <a href="/contents/{{ mv.id }}">
-                                <span class="badge rounded-pill bg-success">보기</span>
-                            </a>
-                        </div>
                     </div>
                 {% endfor %}
             </div>
