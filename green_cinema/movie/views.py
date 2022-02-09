@@ -26,10 +26,11 @@ def home(request):
 
 def show_movie(request):
     s3_client = boto3.client('s3')
-    s3_object = s3_client.get_object(Bucket="green-cinema", Key="data/ratings (1).csv")
+    s3_rating_object = s3_client.get_object(Bucket="green-cinema", Key="data/ratings (1).csv")
+    s3_movie_object = s3_client.get_object(Bucket="green-cinema", Key="data/movies (1).csv")
 
-    ratings = pd.read_csv(s3_object['Body'])
-    movies = pd.read_csv('static/data/movies (1).csv')
+    ratings = pd.read_csv(s3_rating_object['Body'])
+    movies = pd.read_csv(s3_movie_object['Body'])
 
     pd.set_option('display.max_columns', 10)
     pd.set_option('display.width', 300)
