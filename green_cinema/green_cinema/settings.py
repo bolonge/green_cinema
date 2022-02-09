@@ -148,18 +148,18 @@ AUTH_USER_MODEL = 'user.UserModel'
 # EMAIL_HOST_PASSWORD = '12have12!'
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-import os
-import json
-
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-with open(os.path.join(BASE_DIR, 'green_cinema/config/aws.json')) as f:
-    secrets = json.loads(f.read())
-
-AWS_S3_REGION_NAME = 'ap-northeast-2'
-AWS_S3_SIGNATURE_VERSION = 's3v4'
-AWS_ACCESS_KEY_ID = secrets['AWS']['ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = secrets['AWS']['SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = secrets['AWS']['STORAGE_BUCKET_NAME']
-AWS_DEFAULT_ACL = 'public-read' # 올린 파일을 누구나 읽을 수 있게 지정합니다!
+# import os
+# import json
+#
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#
+# with open(os.path.join(BASE_DIR, 'green_cinema/config/aws.json')) as f:
+#     secrets = json.loads(f.read())
+#
+# AWS_S3_REGION_NAME = 'ap-northeast-2'
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+# AWS_ACCESS_KEY_ID = secrets['AWS']['ACCESS_KEY_ID']
+# AWS_SECRET_ACCESS_KEY = secrets['AWS']['SECRET_ACCESS_KEY']
+# AWS_STORAGE_BUCKET_NAME = secrets['AWS']['STORAGE_BUCKET_NAME']
+# AWS_DEFAULT_ACL = 'public-read' # 올린 파일을 누구나 읽을 수 있게 지정합니다!
