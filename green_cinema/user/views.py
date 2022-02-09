@@ -15,6 +15,7 @@ from .forms import ProfileForm
 #     message = "메시지 테스트"
 #     EmailMessage(subject=subject, body=message, to=to, from_email=from_email).send()
 
+
 def sign_up_view(request):
     if request.method == 'GET':
         user = request.user.is_authenticated  # 로그인 된 사용자가 요청하는 건지
@@ -60,6 +61,9 @@ def sign_in_view(request):
         password = request.POST.get('password', None)
         username = request.POST.get('username', None)
         # email과 password가 일치하는지 검사
+        exist_user = get_user_model().objects.filter(email=email)[0]
+        if exist_user.is_deleted:
+            return render(request, 'user/sign-in.html', {'error': '탈퇴한 계정입니다 ;( '})
         me = auth.authenticate(request, email=email,
                                password=password, username=username)
         if me is not None:  # 사용자가 있는지 없는지만 구분 -> 만약있다고 하면 me에 그 사용자 넣어줌. 따라서 로그인 시켜줌
@@ -88,7 +92,7 @@ def user_view(request):
             old_user = UserModel.objects.get(id=request.user.id)
             if old_user.email != form.cleaned_data["email"]:
                 if UserModel.objects.filter(email=form.cleaned_data["email"]).exists():
-                    return render(request, 'user/user.html', {'error':'이미 존재하는 이메일입니다 ;)'})
+                    return render(request, 'user/user.html', {'error': '이미 존재하는 이메일입니다 ;)'})
 
             else:
                 old_user.email = form.cleaned_data["email"]
@@ -107,7 +111,7 @@ def user_view(request):
 
         else:
             return render(request, 'user/user.html', {'error': '이미 사용하는 이메일입니다 ;) '})
-            
+
     elif request.method == 'GET':
         user = request.user.is_authenticated  # 사용자가 로그인 되어있는지 먼저 확인
         user_rating_list = Rating.objects.filter(user_id=request.user.id)
@@ -120,7 +124,5 @@ def user_view(request):
 def delete_user(request):
     user = UserModel.objects.get(id=request.user.id)
     user.delete()
+    auth.logout(request)
     return render(request, 'user/sign-in.html')
-
-
-
