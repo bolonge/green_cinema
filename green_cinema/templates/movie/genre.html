@@ -1,19 +1,22 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
-    <div class="location" id="home">
-        {% for movie_genre_dict in movie_genre_dict_list %}
-            {% for key, value in movie_genre_dict.items %}
-                <h1>{{ key }}</h1>
-                <div class="box">
-                    {% for mv in value %}
-                        <div class="d-flex flex-column justify-content-between">
-                            {{ mv.title }}
-                            <a href="/contents/{{ mv.id }}"><img src="{{ mv.image }}" alt=""></a>
-                        </div>
-                    {% endfor %}
-                </div>
+
+    <section class="main-container">
+        <div class="location" id="home">
+            {% for movie_genre_dict in movie_genre_dict_list %}
+                {% for key, value in movie_genre_dict.items %}
+                    <h1>{{ key }}</h1>
+                    <div class="box">
+                        {% for mv in value %}
+                            <div>
+                                {{ mv.title }}
+                                <a href="/contents/{{ mv.id }}"><img src="{{ mv.image }}" alt=""></a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-    </div>
+        </div>
+    </section>
 {% endblock %}
