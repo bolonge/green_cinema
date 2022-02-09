@@ -22,14 +22,16 @@
           </a>
         </div>
         <form class="container-fluid form-inline my-2 my-lg-0 d-flex justify-content-between">
-          {% if user.is_authenticated %}
-            <div class="button-wrapper">
+          <div class="button-wrapper">
+            {% if user.is_authenticated %}
               <a href="/genre">
                 <span class="btn btn-link list-btn" style="width: 100px;">장르별</span>
               </a>
-            </div>
+            {% endif %}
+          </div>
+          {% if user.is_authenticated %}
             <a href="/user">
-              <div class="img-wrapper">
+              <div class="img-wrapper align-self-end">
                 <img class="sm-size" src="{% static '/img/user.png' %}"/>
               </div>
             </a>
