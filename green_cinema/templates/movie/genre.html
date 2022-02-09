@@ -1,4 +1,25 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block content %}
-    <p>콘텐츠 상세 페이지</p>
+    <div class="location" id="home">
+        {% for movie_genre_dict in movie_genre_dict_list %}
+            {% for key, value in movie_genre_dict.items %}
+                <h1>{{ key }}</h1>
+                <div class="box">
+                    {% for mv in value %}
+                        <div>
+                            {{ mv.title }}
+                            {{ mv.year }}
+                            {{ mv.genre }}
+                            <a href="/contents/{{ mv.id }}"><img src="{{ mv.image }}" alt=""></a>
+                            {{ mv.video }}
+                            {{ mv.cast }}
+                            {{ mv.film_rating_system }}
+                            {{ mv.information }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
 {% endblock %}
