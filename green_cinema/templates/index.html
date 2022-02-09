@@ -21,8 +21,13 @@
             <img class='logo' src="{% static '/img/logo.png' %}">
           </a>
         </div>
-        <form class="form-inline my-2 my-lg-0">
+        <form class="container-fluid form-inline my-2 my-lg-0 d-flex justify-content-between">
           {% if user.is_authenticated %}
+            <div class="button-wrapper">
+              <a href="/genre">
+                <span class="btn btn-link list-btn" style="width: 100px;">장르별</span>
+              </a>
+            </div>
             <a href="/user">
               <div class="img-wrapper">
                 <img class="sm-size" src="{% static '/img/user.png' %}"/>
