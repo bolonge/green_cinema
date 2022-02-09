@@ -21,13 +21,7 @@
         {% for mv in movie %}
           <div class="d-flex flex-column justify-content-between">
             {{ mv.title }}
-            {{ mv.year }}
-            {{ mv.genre }}
             <a href="/contents/{{ mv.id }}"><img src="{{ mv.image }}" alt=""></a>
-            {{ mv.video }}
-            {{ mv.cast }}
-            {{ mv.film_rating_system }}
-            {{ mv.information }}
           </div>
         {% endfor %}
       </div>
